@@ -1,4 +1,6 @@
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token
+
 from .shared import db
 
 
@@ -47,3 +49,14 @@ class User(db.Model):
             True if the password is correct, False otherwise
         """
         return self.bcrypt.check_password_hash(self.password_hash, password)
+
+    def create_access_token(self) -> str:
+        """
+        Create an access token for the user
+
+        Returns
+        -------
+        str
+            The access token
+        """
+        return create_access_token(identity=self.email)
