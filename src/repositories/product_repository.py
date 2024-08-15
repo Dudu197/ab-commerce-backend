@@ -13,6 +13,7 @@ class ProductRepository:
         product: Product
             The product to be created
         """
+        product.created_at = datetime.now()
         db.session.add(product)
         db.session.commit()
 
@@ -65,6 +66,7 @@ class ProductRepository:
         old_product.category = product.category
         old_product.image = product.image
         old_product.stock = product.stock
+        old_product.updated_at = datetime.now()
         db.session.commit()
 
     @staticmethod

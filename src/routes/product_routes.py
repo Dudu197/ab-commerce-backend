@@ -4,7 +4,7 @@ from flask import Blueprint
 
 from src.models import Product
 from src.repositories.user_repository import UserRepository
-from src.repositories.product_repository import ProductRepository
+from src.usecases import ProductInteractor
 
 product_routes = Blueprint("products", __name__, template_folder="templates")
 
@@ -19,7 +19,7 @@ def auth_admin_user(func):
         current_user = UserRepository.get_by_email(user_email)
         if not current_user.is_admin():
             return jsonify({"msg": "Unauthorized"}), 401
-        func()
+        return func()
 
     return wrapper_func
 
@@ -39,8 +39,8 @@ def list_products():
               type: string
               description: Username of the logged-in user
     """
-    products = ProductRepository.get_all()
-    return jsonify([{"name": product.name} for product in products]), 200
+    products = ProductInteractor.get_all()
+    return jsonify(products), 200
 
 
 @product_routes.route("/products/<int:id>", methods=["GET"])
@@ -64,7 +64,7 @@ def get_product(id: int):
               type: string
               description: Username of the logged-in user
     """
-    product = ProductRepository.get_by_id(id)
+    product = ProductInteractor.get_by_id(id)
     return jsonify(product), 200
 
 
@@ -87,7 +87,7 @@ def add():
               type: string
               description: Username of the logged-in user
     """
-    product = Product(
+    product = ProductInteractor.create(
         name=request.json.get("name"),
         description=request.json.get("description"),
         price=request.json.get("price"),
@@ -95,7 +95,6 @@ def add():
         image=request.json.get("image"),
         stock=request.json.get("stock"),
     )
-    ProductRepository.create(product)
     return jsonify(product), 200
 
 
@@ -117,7 +116,7 @@ def update(id: int):
                 type: string
                 description: Username of the logged-in user
     """
-    product = Product(
+    product = ProductInteractor.update(
         id=id,
         name=request.json.get("name"),
         description=request.json.get("description"),
@@ -126,7 +125,6 @@ def update(id: int):
         image=request.json.get("image"),
         stock=request.json.get("stock"),
     )
-    ProductRepository.update(product)
     return jsonify(product), 200
 
 
@@ -148,5 +146,5 @@ def delete(id: int):
                 type: string
                 description: Username of the logged-in user
     """
-    ProductRepository.delete(id)
+    ProductInteractor.delete(id)
     return jsonify({"msg": "Product deleted"}), 200

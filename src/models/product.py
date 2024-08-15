@@ -9,6 +9,7 @@ class Product(db.Model):
     category = db.Column(db.String(80), nullable=False)
     image = db.Column(db.String(120), nullable=False)
     stock = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=True)
     deleted_at = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
