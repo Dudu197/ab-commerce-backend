@@ -2,11 +2,11 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
 
 from .shared import db
+from .user_type import UserType
 
 
 class User(db.Model):
     bcrypt = Bcrypt()
-    __valid_types = ("admin", "customer")
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -15,14 +15,15 @@ class User(db.Model):
     _type = db.Column(db.String(20), nullable=False)
 
     @property
-    def type(self):
-        return self._type
+    def type(self) -> UserType:
+        return UserType(self._type)
 
     @type.setter
     def type(self, value):
-        if value not in self.__valid_types:
-            raise ValueError(f"Invalid type. Must be one of {self.__valid_types}")
-        self._type = value
+        try:
+            self._type = UserType(value).value
+        except ValueError:
+            raise ValueError("Invalid user type")
 
     @property
     def password(self):
@@ -60,3 +61,14 @@ class User(db.Model):
             The access token
         """
         return create_access_token(identity=self.email)
+
+    def is_admin(self) -> bool:
+        """
+        Check if the user is an admin
+
+        Returns
+        -------
+        bool
+            True if the user is an admin, False otherwise
+        """
+        return self.type == UserType.ADMIN

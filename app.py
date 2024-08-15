@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from src.models import db
-from src.routes.user_routes import simple_page
+from src.routes import user_routes, product_routes
 
 app = Flask(__name__)
-app.register_blueprint(simple_page)
+app.register_blueprint(user_routes)
+app.register_blueprint(product_routes)
 
 # Configure the database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
