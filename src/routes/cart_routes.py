@@ -57,8 +57,13 @@ def add_item():
     current_user = UserRepository.get_by_email(user_email)
     product_id = request.json.get("product_id")
     quantity = request.json.get("quantity")
-    CartInteractor.add_item(current_user.id, product_id, quantity)
-    return jsonify({"msg": "Item added successfully"}), 200
+    try:
+        CartInteractor.add_item(current_user.id, product_id, quantity)
+        return jsonify({"msg": "Item added successfully"}), 200
+    except ValueError as e:
+        return jsonify({"msg": str(e)}), 400
+    except Exception as e:
+        return jsonify({"msg": "Error adding item"}), 500
 
 
 @cart_routes.route("/cart/clean", methods=["POST"])
