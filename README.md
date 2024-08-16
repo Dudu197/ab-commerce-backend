@@ -4,6 +4,39 @@ This is a simple e-commerce project that allows users to create products, add pr
 
 The project is implemented using Python and Flask.
 
+## Project Architecture
+
+This project uses clean architecture to separate the business logic from the infrastructure. The project is divided into the following layers:
+
+- **Usecases**: This layer contains the application business logic. It is divided into usecases, each usecase is a class that contains a single method that represents a business operation. The usecases are independent of the infrastructure and can be easily tested.
+- **Models**: This layer contains the domain entities. The entities are plain Python classes that represent the domain objects.
+- **Repositories**: This layer contains the interfaces that define the methods that the infrastructure must implement to interact with the database. The repositories are implemented in the infrastructure layer.
+- **Dataclasses**: This layer contains the dataclasses that are used to transfer data between the layers of the application.
+- **Routes**: This layer contains the Flask routes that define the API endpoints. The routes call the usecases to execute the business logic.
+
+The project also contains a `tests` directory with unit tests for the usecases, models and repositories.
+
+## Database
+
+This project uses an in-memory SQLite database to store the data. The database is created when the application starts and is destroyed when the application stops. The database is created using SQLAlchemy and the data is accessed using the `sqlite3` module.
+
+## Authentication
+
+This project uses JWT tokens for authentication. When a user logs in, a JWT token is generated and returned to the user. The user must include this token in the `Authorization` header of the requests to authenticate.
+
+## Authorization
+
+This project uses role-based authorization to restrict access to certain endpoints. There are two roles: `admin` and `customer`. The `admin` role has access to all endpoints, while the `customer` role has access to a limited set of endpoints.
+
+## Postman Collection
+
+A Postman collection with the API endpoints is available in the `postman` directory.
+Be sure to update the authorization token in the collection to match the token generated when you log in.
+
+The collection uses the following variables:
+
+- `ecommerce`: The base URL of the API (e.g. `http://localhost:5000`).
+
 ## Setup
 
 ### Create a new environment with conda (optional)
@@ -114,39 +147,6 @@ curl http://localhost:5000/cart -H "Authorization: Bearer <token>"
 ```bash
 curl -X POST http://localhost:5000/cart/checkout -H "Authorization: Bearer <token>"
 ```
-
-## Project Architecture
-
-This project uses clean architecture to separate the business logic from the infrastructure. The project is divided into the following layers:
-
-- **Usecases**: This layer contains the application business logic. It is divided into usecases, each usecase is a class that contains a single method that represents a business operation. The usecases are independent of the infrastructure and can be easily tested.
-- **Models**: This layer contains the domain entities. The entities are plain Python classes that represent the domain objects.
-- **Repositories**: This layer contains the interfaces that define the methods that the infrastructure must implement to interact with the database. The repositories are implemented in the infrastructure layer.
-- **Dataclasses**: This layer contains the dataclasses that are used to transfer data between the layers of the application.
-- **Routes**: This layer contains the Flask routes that define the API endpoints. The routes call the usecases to execute the business logic.
-
-The project also contains a `tests` directory with unit tests for the usecases, models and repositories.
-
-## Database
-
-This project uses an in-memory SQLite database to store the data. The database is created when the application starts and is destroyed when the application stops. The database is created using SQLAlchemy and the data is accessed using the `sqlite3` module.
-
-## Authentication
-
-This project uses JWT tokens for authentication. When a user logs in, a JWT token is generated and returned to the user. The user must include this token in the `Authorization` header of the requests to authenticate.
-
-## Authorization
-
-This project uses role-based authorization to restrict access to certain endpoints. There are two roles: `admin` and `customer`. The `admin` role has access to all endpoints, while the `customer` role has access to a limited set of endpoints.
-
-## Postman Collection
-
-A Postman collection with the API endpoints is available in the `postman` directory.
-Be sure to update the authorization token in the collection to match the token generated when you log in.
-
-The collection uses the following variables:
-
-- `ecommerce`: The base URL of the API (e.g. `http://localhost:5000`).
 
 ## Improvements
 
