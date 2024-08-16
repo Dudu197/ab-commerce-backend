@@ -2,7 +2,6 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import Blueprint
 
-from src.models import Product
 from src.repositories.user_repository import UserRepository
 from src.usecases import ProductInteractor
 
