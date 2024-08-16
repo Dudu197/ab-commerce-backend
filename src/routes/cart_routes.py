@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import Blueprint
 
 from src.repositories.user_repository import UserRepository
-from src.usecases import CartInteractor
+from src.usecases import CartInteractor, OrderInteractor
 
 cart_routes = Blueprint("carts", __name__, template_folder="templates")
 
@@ -93,5 +93,5 @@ def checkout():
     """
     user_email = get_jwt_identity()
     current_user = UserRepository.get_by_email(user_email)
-    CartInteractor.checkout(current_user.id)
-    return jsonify({"msg": "Cart checked out successfully"}), 200
+    cart = OrderInteractor.create(current_user.id)
+    return jsonify(cart), 200

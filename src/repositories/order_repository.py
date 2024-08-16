@@ -15,6 +15,7 @@ class OrderRepository:
             The order to be created
         """
         now = datetime.now()
+        order.status = "completed"
         order.created_at = now
         order.updated_at = now
         db.session.add(order)
@@ -48,3 +49,20 @@ class OrderRepository:
             The order
         """
         return Order.query.get(order_id)
+
+    @staticmethod
+    def list_by_user_id(user_id: int) -> list[Order]:
+        """
+        List orders by user ID
+
+        Parameters
+        ----------
+        user_id: int
+            The user's ID
+
+        Returns
+        -------
+        list[Order]
+            The list of orders
+        """
+        return Order.query.filter_by(user_id=user_id).all()

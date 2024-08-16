@@ -3,3 +3,4 @@ from .product_interactor import ProductInteractor
 from .cart_item_interactor import CartItemInteractor
 from .cart_interactor import CartInteractor
 from .order_item_interactor import OrderItemInteractor
+from .order_interactor import OrderInteractor
