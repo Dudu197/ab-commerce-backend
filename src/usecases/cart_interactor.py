@@ -1,11 +1,12 @@
-from src.models import Cart, CartItem, Product, db
+from src.models import Cart
+from src.dataclasses import CartData
 from src.repositories import CartRepository
 from src.usecases import CartItemInteractor
 
 
 class CartInteractor:
     @staticmethod
-    def create(user_id: int):
+    def create(user_id: int) -> CartData:
         """
         Create a new cart
 
@@ -13,12 +14,18 @@ class CartInteractor:
         ----------
         user_id: int
             The user's ID
+
+        Returns
+        -------
+        CartData
+            The cart data
         """
         cart = Cart(user_id=user_id)
         CartRepository.create(cart)
+        return CartData.from_cart(cart, [])
 
     @staticmethod
-    def get_by_user_id(user_id: int) -> Cart:
+    def get_by_user_id(user_id: int) -> CartData:
         """
         Get a cart by user ID
 
@@ -29,11 +36,12 @@ class CartInteractor:
 
         Returns
         -------
-        Cart
-            The cart
+        CartData
+            The cart data
         """
         cart = CartRepository.get_by_user_id(user_id)
-        return cart
+        cart_items = CartItemInteractor.get_all_by_cart(cart.id)
+        return CartData.from_cart(cart, cart_items)
 
     @staticmethod
     def clean(user_id: int):

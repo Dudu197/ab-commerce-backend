@@ -78,3 +78,26 @@ class CartItemInteractor:
             product = ProductInteractor.get_by_id(product_id)
             return CartItemData.from_cart_item(cart_item, product)
         return None
+
+    @staticmethod
+    def get_all_by_cart(cart_id: int) -> list[CartItemData]:
+        """
+        Get all cart items by cart ID
+
+        Parameters
+        ----------
+        cart_id: int
+            The cart's ID
+
+        Returns
+        -------
+        List[CartItemData]
+            The cart items data
+        """
+        cart_items = CartItemRepository.get_all_by_cart(cart_id)
+        return [
+            CartItemData.from_cart_item(
+                cart_item, ProductInteractor.get_by_id(cart_item.product_id)
+            )
+            for cart_item in cart_items
+        ]
