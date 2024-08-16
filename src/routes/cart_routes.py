@@ -98,5 +98,10 @@ def checkout():
     """
     user_email = get_jwt_identity()
     current_user = UserRepository.get_by_email(user_email)
-    cart = OrderInteractor.create(current_user.id)
-    return jsonify(cart), 200
+    try:
+        cart = OrderInteractor.create(current_user.id)
+        return jsonify(cart), 200
+    except ValueError as e:
+        return jsonify({"msg": str(e)}), 400
+    except Exception as e:
+        return jsonify({"msg": "Error checking out cart"}), 500

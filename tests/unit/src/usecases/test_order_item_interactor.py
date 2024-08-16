@@ -21,7 +21,7 @@ class TestOrderItemInteractor(unittest.TestCase):
             description="test",
             category="test",
             image="test",
-            stock=1,
+            stock=10,
             created_at=datetime.now(),
             deleted_at=datetime.now(),
         )
@@ -30,6 +30,54 @@ class TestOrderItemInteractor(unittest.TestCase):
 
         self.assertEqual(order_item_data.product, product_data)
         mock_order_item_repository.create.assert_called_once()
+
+    @patch("src.usecases.order_item_interactor.OrderItemRepository")
+    @patch("src.usecases.order_item_interactor.ProductInteractor")
+    def test_create_invalid_product(
+        self, mock_product_interactor, mock_order_item_repository
+    ):
+        order_id = 1
+        product_id = 2
+        quantity = 3
+        product_data = ProductData(
+            id=product_id,
+            name="test",
+            price=10.0,
+            description="test",
+            category="test",
+            image="test",
+            stock=0,
+            created_at=datetime.now(),
+            deleted_at=datetime.now(),
+        )
+        mock_product_interactor.get_by_id.return_value = product_data
+
+        with self.assertRaises(ValueError):
+            OrderItemInteractor.create(order_id, product_id, quantity)
+
+    @patch("src.usecases.order_item_interactor.OrderItemRepository")
+    @patch("src.usecases.order_item_interactor.ProductInteractor")
+    def test_create_invalid_quantity(
+        self, mock_product_interactor, mock_order_item_repository
+    ):
+        order_id = 1
+        product_id = 2
+        quantity = 3
+        product_data = ProductData(
+            id=product_id,
+            name="test",
+            price=10.0,
+            description="test",
+            category="test",
+            image="test",
+            stock=1,
+            created_at=datetime.now(),
+            deleted_at=datetime.now(),
+        )
+        mock_product_interactor.get_by_id.return_value = product_data
+
+        with self.assertRaises(ValueError):
+            OrderItemInteractor.create(order_id, product_id, quantity)
 
     @patch("src.usecases.order_item_interactor.OrderItemRepository")
     @patch("src.usecases.order_item_interactor.ProductInteractor")
