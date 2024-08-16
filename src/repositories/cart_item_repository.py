@@ -50,6 +50,37 @@ class CartItemRepository:
         return CartItem.query.get(cart_item_id)
 
     @staticmethod
+    def get_by_cart_and_product(cart_id: int, product_id: int) -> CartItem:
+        """
+        Get a cart item by cart and product
+
+        Parameters
+        ----------
+        cart_id: int
+            The cart's ID
+        product_id: int
+            The product's ID
+
+        Returns
+        -------
+        CartItem
+            The cart item
+        """
+        return CartItem.query.filter_by(cart_id=cart_id, product_id=product_id).first()
+
+    @staticmethod
+    def update(cart_item: CartItem):
+        """
+        Update a cart item
+
+        Parameters
+        ----------
+        cart_item: CartItem
+            The cart item to be updated
+        """
+        db.session.commit()
+
+    @staticmethod
     def delete(cart_item: CartItem):
         """
         Remove a cart item
