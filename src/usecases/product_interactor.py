@@ -153,6 +153,19 @@ class ProductInteractor:
 
     @classmethod
     def __validate_product_attributes(cls, product: Product):
+        """
+        Validate product attributes
+
+        Parameters
+        ----------
+        product: Product
+            The product to be validated
+
+        Raises
+        -------
+        ValueError
+            If the product is invalid
+        """
         if product.name is None:
             raise ValueError("Invalid product name")
         if product.price is None:
