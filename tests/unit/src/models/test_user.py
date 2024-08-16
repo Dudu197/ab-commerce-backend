@@ -1,6 +1,8 @@
 from src.models.user import User
 import unittest
 
+from src.models.user_type import UserType
+
 
 class TestUserModel(unittest.TestCase):
     def test_password_setter(self):
@@ -18,7 +20,7 @@ class TestUserModel(unittest.TestCase):
     def test_type_setter(self):
         user = User()
         user.type = "admin"
-        self.assertEqual(user.type, "admin")
+        self.assertEqual(user.type, UserType.ADMIN)
 
     def test_type_setter_invalid(self):
         user = User()

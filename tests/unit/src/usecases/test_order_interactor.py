@@ -61,6 +61,6 @@ class TestOrderInteractor(unittest.TestCase):
         ]
 
         order_data = OrderInteractor.list_by_user_id(user_id)
-        
+
         self.assertEqual(order_data[0].id, order_id)
         mock_order_item_interactor.list_by_order_id.assert_called_once_with(order_id)
