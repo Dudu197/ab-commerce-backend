@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "af5df99c-b3b0-4808-bb59-b59d3b20b381",
+		"name": "Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37640544"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ze\",\r\n    \"email\": \"admin@teste.com\",\r\n    \"password\": \"testpass\",\r\n    \"type\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/register",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@teste.com\",\r\n    \"password\": \"testpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/login",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzU4NTE2MCwianRpIjoiYjQyZWViZTAtNTdiNS00ZmJjLThjY2MtMTlhNjY4Y2IwMDVkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluQHRlc3RlLmNvbSIsIm5iZiI6MTcyMzU4NTE2MCwiY3NyZiI6IjFjNjU4OTc5LThiYjQtNDRiMC05M2E4LTE0YTU3YzQyNDUzMSIsImV4cCI6MTcyMzU4NjA2MH0.lY4yHKKl6kFPUfMWcPy_33pEhig5Y6_WogogQcnXV-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jose\",\r\n    \"email\": \"admin@teste.com\",\r\n    \"password\": \"testpass\",\r\n    \"type\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/users",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show User",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "List Products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "List Product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ecommerce}}/products/1",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzU2NTU5MiwianRpIjoiN2I2ODc4MmItNzcyZi00MjlkLThmNzQtOWU3Zjk1NThjMzQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluQHRlc3RlLmNvbSIsIm5iZiI6MTcyMzU2NTU5MiwiY3NyZiI6ImI0MGI5MTA1LWEzNDYtNDM0My1iYzVjLTlmYTI2NzIzNmM5ZiIsImV4cCI6MTcyMzU2NjQ5Mn0.uZ2ZkMU7pqsT0B_OuCju9sgQDZALFlDNFbX29HSgPdk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Product 1\",\r\n    \"description\": \"Product description\",\r\n    \"price\": 20.00,\r\n    \"category\": \"Cool\",\r\n    \"stock\": 10,\r\n    \"image\": \"http://image.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/products",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzU2NTU5MiwianRpIjoiN2I2ODc4MmItNzcyZi00MjlkLThmNzQtOWU3Zjk1NThjMzQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluQHRlc3RlLmNvbSIsIm5iZiI6MTcyMzU2NTU5MiwiY3NyZiI6ImI0MGI5MTA1LWEzNDYtNDM0My1iYzVjLTlmYTI2NzIzNmM5ZiIsImV4cCI6MTcyMzU2NjQ5Mn0.uZ2ZkMU7pqsT0B_OuCju9sgQDZALFlDNFbX29HSgPdk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Product 1\",\r\n    \"description\": \"Product description\",\r\n    \"price\": 20.00,\r\n    \"category\": \"Cool\",\r\n    \"stock\": 10,\r\n    \"image\": \"http://image.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/products/1",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzU2NTU5MiwianRpIjoiN2I2ODc4MmItNzcyZi00MjlkLThmNzQtOWU3Zjk1NThjMzQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluQHRlc3RlLmNvbSIsIm5iZiI6MTcyMzU2NTU5MiwiY3NyZiI6ImI0MGI5MTA1LWEzNDYtNDM0My1iYzVjLTlmYTI2NzIzNmM5ZiIsImV4cCI6MTcyMzU2NjQ5Mn0.uZ2ZkMU7pqsT0B_OuCju9sgQDZALFlDNFbX29HSgPdk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ecommerce}}/products/1",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Show Cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ecommerce}}/cart",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add product to cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 2,\r\n    \"quantity\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ecommerce}}/cart/add",
+							"host": [
+								"{{ecommerce}}"
+							],
+							"path": [
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzg0ODYwNCwianRpIjoiOGQ5MzJiZjgtYjgzYS00OTBlLTllZmMtNjRlYmY1OTMyMTBhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImJvYkB0ZXN0LmNvbSIsIm5iZiI6MTcyMzg0ODYwNCwiY3NyZiI6Ijg0ZWY0MjgxLTlhMjgtNGZjMi04YWU1LTU2OWQ3OTg2MmNlMiIsImV4cCI6MTcyMzg0OTUwNH0.fyaC-C_6v4MMbWvuPT6Jf9KhCNTcBghozrti3v-q8ks",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
