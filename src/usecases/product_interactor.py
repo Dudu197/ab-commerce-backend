@@ -137,6 +137,8 @@ class ProductInteractor:
             The product data
         """
         product = ProductRepository.get_by_id(product_id)
+        if product is None:
+            return None
         return ProductData.from_product(product)
 
     @classmethod

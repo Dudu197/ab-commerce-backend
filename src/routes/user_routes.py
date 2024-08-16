@@ -125,7 +125,7 @@ def update_user():
 
 @user_routes.route("/me", methods=["GET"])
 @jwt_required()
-def protected():
+def me():
     """
     Access a protected route
     ---
