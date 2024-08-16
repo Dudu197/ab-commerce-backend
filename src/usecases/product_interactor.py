@@ -4,9 +4,15 @@ from src.models import Product
 
 
 class ProductInteractor:
-    @staticmethod
+    @classmethod
     def create(
-        name: str, price: float, description: str, category: str, image: str, stock: int
+        cls,
+        name: str,
+        price: float,
+        description: str,
+        category: str,
+        image: str,
+        stock: int,
     ) -> ProductData:
         """
         Create a new product
@@ -30,6 +36,11 @@ class ProductInteractor:
         -------
         ProductData
             The product data
+
+        Raises
+        -------
+        ValueError
+            If the product is invalid
         """
         product = Product(
             name=name,
@@ -39,11 +50,13 @@ class ProductInteractor:
             image=image,
             stock=stock,
         )
+        cls.__validate_product_attributes(product)
         ProductRepository.create(product)
         return ProductData.from_product(product)
 
-    @staticmethod
+    @classmethod
     def update(
+        cls,
         id: int,
         name: str,
         price: float,
@@ -76,6 +89,11 @@ class ProductInteractor:
         -------
         ProductData
             The product data
+
+        Raises
+        -------
+        ValueError
+            If the product is invalid
         """
         product = Product(
             id=id,
@@ -86,11 +104,12 @@ class ProductInteractor:
             image=image,
             stock=stock,
         )
+        cls.__validate_product_attributes(product)
         ProductRepository.update(product)
         return ProductData.from_product(product)
 
-    @staticmethod
-    def get_all() -> list[ProductData]:
+    @classmethod
+    def get_all(cls) -> list[ProductData]:
         """
         Get all products
 
@@ -102,8 +121,8 @@ class ProductInteractor:
         products = ProductRepository.get_all()
         return [ProductData.from_product(product) for product in products]
 
-    @staticmethod
-    def get_by_id(product_id: int) -> ProductData:
+    @classmethod
+    def get_by_id(cls, product_id: int) -> ProductData:
         """
         Get a product by ID
 
@@ -120,8 +139,8 @@ class ProductInteractor:
         product = ProductRepository.get_by_id(product_id)
         return ProductData.from_product(product)
 
-    @staticmethod
-    def delete(product_id: int):
+    @classmethod
+    def delete(cls, product_id: int):
         """
         Delete a product
 
@@ -131,3 +150,20 @@ class ProductInteractor:
             The product's ID
         """
         ProductRepository.delete(product_id)
+
+    @classmethod
+    def __validate_product_attributes(cls, product: Product):
+        if product.name is None:
+            raise ValueError("Invalid product name")
+        if product.price is None:
+            raise ValueError("Invalid product price")
+        if product.description is None:
+            raise ValueError("Invalid product description")
+        if product.category is None:
+            raise ValueError("Invalid product category")
+        if product.image is None:
+            raise ValueError("Invalid product image")
+        if product.stock is None:
+            raise ValueError("Invalid product stock")
+        if product.stock < 0:
+            raise ValueError("Invalid product stock")

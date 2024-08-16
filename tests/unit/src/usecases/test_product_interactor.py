@@ -14,6 +14,41 @@ class TestProductInteractor(unittest.TestCase):
         mock_product_repository.create.assert_called_once()
 
     @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_name(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create(None, 10.0, "test", "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_price(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", None, "test", "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_description(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", 10.0, None, "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_category(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", 10.0, "test", None, "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_image(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", 10.0, "test", "test", None, 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_none_stock(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", 10.0, "test", "test", "test", None)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_create_invalid_negative_stock(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.create("test", 10.0, "test", "test", "test", -1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
     def test_update(self, mock_product_repository):
         product_data = ProductInteractor.update(
             1, "test", 10.0, "test", "test", "test", 1
@@ -21,6 +56,41 @@ class TestProductInteractor(unittest.TestCase):
         self.assertEqual(product_data.name, "test")
         self.assertEqual(product_data.price, 10.0)
         mock_product_repository.update.assert_called_once()
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_name(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, None, 10.0, "test", "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_price(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", None, "test", "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_description(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", 10.0, None, "test", "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_category(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", 10.0, "test", None, "test", 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_image(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", 10.0, "test", "test", None, 1)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_none_stock(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", 10.0, "test", "test", "test", None)
+
+    @patch("src.usecases.product_interactor.ProductRepository")
+    def test_update_invalid_negative_stock(self, mock_product_repository):
+        with self.assertRaises(ValueError):
+            ProductInteractor.update(1, "test", 10.0, "test", "test", "test", -1)
 
     @patch("src.usecases.product_interactor.ProductRepository")
     def test_get_all(self, mock_product_repository):

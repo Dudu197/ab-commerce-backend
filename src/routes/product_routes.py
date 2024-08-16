@@ -64,6 +64,8 @@ def get_product(id: int):
               description: Username of the logged-in user
     """
     product = ProductInteractor.get_by_id(id)
+    if product is None:
+        return jsonify({"msg": "Product not found"}), 404
     return jsonify(product), 200
 
 
@@ -86,15 +88,20 @@ def add():
               type: string
               description: Username of the logged-in user
     """
-    product = ProductInteractor.create(
-        name=request.json.get("name"),
-        description=request.json.get("description"),
-        price=request.json.get("price"),
-        category=request.json.get("category"),
-        image=request.json.get("image"),
-        stock=request.json.get("stock"),
-    )
-    return jsonify(product), 200
+    try:
+        product = ProductInteractor.create(
+            name=request.json.get("name"),
+            description=request.json.get("description"),
+            price=request.json.get("price"),
+            category=request.json.get("category"),
+            image=request.json.get("image"),
+            stock=request.json.get("stock"),
+        )
+        return jsonify(product), 200
+    except ValueError as e:
+        return jsonify({"msg": f"Error adding product: {e}"}), 400
+    except Exception as e:
+        return jsonify({"msg": f"Error adding product: {e}"}), 500
 
 
 @product_routes.route("/products/<int:id>", methods=["PUT"])
@@ -115,16 +122,21 @@ def update(id: int):
                 type: string
                 description: Username of the logged-in user
     """
-    product = ProductInteractor.update(
-        id=id,
-        name=request.json.get("name"),
-        description=request.json.get("description"),
-        price=request.json.get("price"),
-        category=request.json.get("category"),
-        image=request.json.get("image"),
-        stock=request.json.get("stock"),
-    )
-    return jsonify(product), 200
+    try:
+        product = ProductInteractor.update(
+            id=id,
+            name=request.json.get("name"),
+            description=request.json.get("description"),
+            price=request.json.get("price"),
+            category=request.json.get("category"),
+            image=request.json.get("image"),
+            stock=request.json.get("stock"),
+        )
+        return jsonify(product), 200
+    except ValueError as e:
+        return jsonify({"msg": f"Error updating product: {e}"}), 400
+    except Exception as e:
+        return jsonify({"msg": f"Error updating product: {e}"}), 500
 
 
 @product_routes.route("/products/<int:id>", methods=["DELETE"])
@@ -145,5 +157,8 @@ def delete(id: int):
                 type: string
                 description: Username of the logged-in user
     """
-    ProductInteractor.delete(id)
-    return jsonify({"msg": "Product deleted"}), 200
+    try:
+        ProductInteractor.delete(id)
+        return jsonify({"msg": "Product deleted"}), 200
+    except Exception as e:
+        return jsonify({"msg": f"Error deleting product: {e}"}), 500
