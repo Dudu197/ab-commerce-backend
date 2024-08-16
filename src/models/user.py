@@ -72,3 +72,14 @@ class User(db.Model):
             True if the user is an admin, False otherwise
         """
         return self.type == UserType.ADMIN
+
+    def has_password(self) -> bool:
+        """
+        Check if the user has a password
+
+        Returns
+        -------
+        bool
+            True if the user has a password, False otherwise
+        """
+        return self.password_hash is not None
